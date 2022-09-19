@@ -7,4 +7,6 @@ public class Seat
     public string Key { get; set; }
     
     public long BusId { get; set; }
+
+    public bool Reserved { get; set; } = false;
 }

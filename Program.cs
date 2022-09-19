@@ -13,6 +13,12 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<BusReservationDbContext> (options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("BusReservationConnectionString")));
 
+builder.Host.ConfigureLogging(logging =>
+{
+    logging.ClearProviders();
+    logging.AddConsole();
+});
+
 builder.Services.AddScoped<IReservationService, ReservationService>();
 builder.Services.AddScoped<IReservationDal, ReservationDal>();
 

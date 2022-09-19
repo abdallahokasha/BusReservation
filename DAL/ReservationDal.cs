@@ -11,18 +11,17 @@ namespace BusReservation.DAL;
 public class ReservationDal : IReservationDal
 {
     private readonly BusReservationDbContext _dbContext;
-
+    private const double SeatPrice = 10.0;
     public ReservationDal(BusReservationDbContext busReservationDbContext)
     {
         _dbContext = busReservationDbContext;
     }
     public async Task<CoreResultModel<AddReservationResponse>> AddReservation(AddReservationRequest request)
     {
-        // TODO: add db validations here 
+        // TODO: add db validations here
         var reservation = new Reservation {
-        Id = 1,
         UserEmail = request.UserEmail,
-        Price = 10 * request.SeatsNumbers.Count,
+        Price = SeatPrice * request.SeatsNumbers.Count,
         BusId = 1,
         Key = "RSV" + Guid.NewGuid(),
         SeatsNumbers = new List<int>{1, 2}
@@ -30,8 +29,7 @@ public class ReservationDal : IReservationDal
         _dbContext.Reservations.Add(reservation);
         await _dbContext.SaveChangesAsync();
 
-        var response = new AddReservationResponse(); // TODO: response fill object
-
+        var response = new AddReservationResponse{UserEmail = request.UserEmail, Price = SeatPrice * request.SeatsNumbers.Count}; // TODO: response fill object
         return new CoreResultModel<AddReservationResponse>(response, HttpStatusCode.Created);
     }
 

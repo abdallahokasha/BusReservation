@@ -1,6 +1,6 @@
 namespace BusReservation.Models.Domain;
 
-public class Reservation
+public class Reservation : BaseEntity
 {
     public long Id { get; set; }
     

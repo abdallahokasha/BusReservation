@@ -1,6 +1,6 @@
 namespace BusReservation.Models.Domain;
 
-public class Ticket
+public class Ticket : BaseEntity
 {
     public long Id { get; set; }
     
@@ -10,7 +10,5 @@ public class Ticket
     
     public long SeatId { get; set; }
     
-    public long BusId { get; set; }
-    
-    public double Price { get; set; } = 10;
+    public double Price { get; set; } = 10.0;
 }
