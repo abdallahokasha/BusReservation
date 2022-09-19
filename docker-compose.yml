@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+
+  web:
+    container_name: 'BusReservation'
+    image: 'busreservation'
+    build:
+      context: .
+      dockerfile: busreservation.dockerfile
+    ports:
+      - "5000:5000"
+    depends_on:
+      - "postgres"
+    networks:
+      - busreservation-network
+
+  postgres:
+    container_name: 'postgres'
+    image: postgres
+    environment:
+      # change this for a "real" app!
+      POSTGRES_PASSWORD: password
+    networks:
+      - busreservation-network
+
+networks:
+  busreservation-network:
+    driver: bridge
