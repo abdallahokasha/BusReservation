@@ -12,6 +12,9 @@ public class ReservationDal : IReservationDal
 {
     private readonly BusReservationDbContext _dbContext;
     private const double SeatPrice = 10.0;
+    private const int CairoAlexBusId = 1;
+
+    
     public ReservationDal(BusReservationDbContext busReservationDbContext)
     {
         _dbContext = busReservationDbContext;
@@ -40,7 +43,7 @@ public class ReservationDal : IReservationDal
             BusId = r.BusId,
             UserEmail = r.UserEmail
         }).Select(x => new FrequentTripsData{UserEmail = x.Key.UserEmail,
-            TripRoute = x.Key.BusId == 1 ? TripRoutes.CairoAlex : TripRoutes.CairoAswan}).ToList();
+            TripRoute = x.Key.BusId == CairoAlexBusId ? TripRoutes.CairoAlex : TripRoutes.CairoAswan}).ToList();
         return new CoreResultModel<UsersFrequentTripsResponse>(new UsersFrequentTripsResponse{FrequentUsersTrips =  frequentTrips}, HttpStatusCode.OK);
     }
 }
