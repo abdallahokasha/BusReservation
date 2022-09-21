@@ -6,7 +6,9 @@ Update the database with created migrations `dotnet ef database update`
 
 We can check existing API using [swagger](https://localhost:7032/swagger/index.html) after running the app.
 
-Add reservation request example
+We can also try it through [postman collection](https://github.com/abdallahokasha/BusReservation/blob/master/BusReservation.postman_collection.json) or the following `curl` request.
+
+Add reservation request:
 ```
 curl --location --request POST 'https://localhost:7032/api/1.0/Reservations/Add' \
 --header 'token: gjSkeBTp0dMTJVsR70ZJmg==' \
@@ -17,7 +19,7 @@ curl --location --request POST 'https://localhost:7032/api/1.0/Reservations/Add'
   "busNumber": 1
 }'
 ```
-Get frequent trip request example
+Get frequent trip request:
 
 ```
 curl --location --request GET 'https://localhost:7032/api/1.0/Reservations/FrequentUsersTrips' \
