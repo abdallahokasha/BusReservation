@@ -28,7 +28,7 @@ public class ReservationDal : IReservationDal
             .Select(x => x.SeatNumber).ToList();
         var requestReservedSeat = request.SeatsNumbers.Intersect(reservedBusTickets).ToList();
         if (requestReservedSeat.Count > 0)
-            return new CoreResultModel<AddReservationResponse>( null, HttpStatusCode.BadRequest,
+            return new CoreResultModel<AddReservationResponse>(null, HttpStatusCode.BadRequest,
                 $"error: seats {string.Join(", ", requestReservedSeat)} are already reserved!");
 
         var addedTicketsData = new List<TicketResponse>();
@@ -80,23 +80,30 @@ public class ReservationDal : IReservationDal
         {
             BusId = t.BusNumber,
             UserEmail = t.UserEmail
-        }).Select(x => new FrequentTripsData
+        })
+            .Select(x => new FrequentTripsData
         {
             UserEmail = x.Key.UserEmail,
-            TripRoute = x.Key.BusId == CairoAlexBusId ? TripRoutes.CairoAlex : TripRoutes.CairoAswan
+            TripRoute = GetBusTripRoute(x.Key.BusId).ToString()
         }).ToList();
         
         return new CoreResultModel<UsersFrequentTripsResponse>(
             new UsersFrequentTripsResponse { FrequentUsersTrips = frequentTrips }, HttpStatusCode.OK, "");
     }
 
-    private double CalculatePrice(int numberOfSeats)
+    private static double CalculatePrice(int numberOfSeats)
     {
         return SeatPrice * numberOfSeats * (numberOfSeats >= 5 ? Discount80 : NoDiscount);
     }
 
-    private string GetBusKey(int busNumber)
+    private static string GetBusKey(int busNumber)
     {
         return busNumber == 1 ? "Bus-01" : "Bus-02";
     }
+
+    private static TripRoutes GetBusTripRoute(long busNumber)
+    {
+        return busNumber == CairoAlexBusId ? TripRoutes.CairoAlex : TripRoutes.CairoAswan;
+    }
+    
 }
