@@ -84,7 +84,7 @@ public class ReservationDal : IReservationDal
             .Select(x => new FrequentTripsData
         {
             UserEmail = x.Key.UserEmail,
-            TripRoute = GetBusTripRoute(x.Key.BusId).ToString()
+            TripRoute = GetBusTripRoute(x.Key.BusId)
         }).ToList();
         
         return new CoreResultModel<UsersFrequentTripsResponse>(
@@ -101,9 +101,9 @@ public class ReservationDal : IReservationDal
         return busNumber == 1 ? "Bus-01" : "Bus-02";
     }
 
-    private static TripRoutes GetBusTripRoute(long busNumber)
+    private static string GetBusTripRoute(long busNumber)
     {
-        return busNumber == CairoAlexBusId ? TripRoutes.CairoAlex : TripRoutes.CairoAswan;
+        return busNumber == CairoAlexBusId ? TripRoutes.CairoAlex.ToString() : TripRoutes.CairoAswan.ToString();
     }
     
 }
