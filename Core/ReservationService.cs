@@ -15,6 +15,12 @@ public class ReservationService : IReservationService
     {
         _reservationDal = reservationDal;
     }
+
+    public  CoreResultModel<UsersFrequentTripsResponse> GetFrequentUsersTrips()
+    {
+        return  _reservationDal.GetFrequentUsersTrips();
+    }
+    
     public async Task<CoreResultModel<AddReservationResponse>> AddReservation(AddReservationRequest request)
     {
         if (!request.IsValid())
@@ -22,10 +28,5 @@ public class ReservationService : IReservationService
                 HttpStatusCode.BadRequest, "error: user email, bus or seats empty");
         
         return  await _reservationDal.AddReservation(request);
-    }
-
-    public  CoreResultModel<UsersFrequentTripsResponse> GetFrequentUsersTrips()
-    {
-        return  _reservationDal.GetFrequentUsersTrips();
     }
 }

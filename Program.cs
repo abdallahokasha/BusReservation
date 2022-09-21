@@ -3,6 +3,7 @@ using BusReservation.Core.Interfaces;
 using BusReservation.DAL;
 using BusReservation.DAL.Interfaces;
 using BusReservation.Data;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -42,3 +43,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+    

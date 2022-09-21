@@ -20,13 +20,13 @@ public class ReservationsController : Controller
     }
     
     [HttpPost]
-    public dynamic Add(AddReservationRequest request)
+    public async Task<dynamic> Add(AddReservationRequest request)
     {
         _logger.LogInformation(LogEventsTraces.AddReservation, "Add New Reservation");
         if (!Request.Headers[RequestHeaders.Token].Equals(_authToken))
             return new StatusCodeResult(401);
 
-        return _reservationService.AddReservation(request);
+        return await _reservationService.AddReservation(request);
     }
     
     [HttpGet]

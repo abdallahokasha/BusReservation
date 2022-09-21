@@ -1,0 +1,26 @@
+{
+	"info": {
+		"_postman_id": "b30b9491-abff-41cc-9ff8-794da05a6c87",
+		"name": "BusReservation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3427179"
+	},
+	"item": [
+		{
+			"name": "Add Reservation",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "FrequentUsersTrips",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

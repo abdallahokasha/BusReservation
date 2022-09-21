@@ -17,8 +17,8 @@ public class CoreResultModel<T>
     }
 
     public CoreResultModel(T result, HttpStatusCode status, string errorMessage)
-        : this(result, status)
-    {
+         : this(result, status)
+    { 
         this.ErrorMessage = errorMessage;
     }
 }

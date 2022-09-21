@@ -13,9 +13,7 @@ curl --location --request POST 'https://localhost:7032/api/1.0/Reservations/Add'
 --header 'Content-Type: application/json' \
 --data-raw '{
   "userEmail": "abc@xyz.com",
-  "seatsNumbers": [
-    1, 2
-  ],
+  "seatsNumbers": [1, 2],
   "busNumber": 1
 }'
 ```

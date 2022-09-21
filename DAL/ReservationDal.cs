@@ -14,7 +14,8 @@ public class ReservationDal : IReservationDal
     private readonly BusReservationDbContext _dbContext;
     private const double SeatPrice = 10.0;
     private const int CairoAlexBusId = 1;
-
+    private const double Discount80 = 0.8;
+    private const double NoDiscount = 1.0;
 
     public ReservationDal(BusReservationDbContext busReservationDbContext)
     {
@@ -27,12 +28,11 @@ public class ReservationDal : IReservationDal
             .Select(x => x.SeatNumber).ToList();
         var requestReservedSeat = request.SeatsNumbers.Intersect(reservedBusTickets).ToList();
         if (requestReservedSeat.Count > 0)
-            return new CoreResultModel<AddReservationResponse>(new AddReservationResponse(), HttpStatusCode.BadRequest,
-                $"error: seats {requestReservedSeat} are already reserved!");
+            return new CoreResultModel<AddReservationResponse>( null, HttpStatusCode.BadRequest,
+                $"error: seats {string.Join(", ", requestReservedSeat)} are already reserved!");
 
         var addedTicketsData = new List<TicketResponse>();
         await using var transaction = await _dbContext.Database.BeginTransactionAsync();
-
         try
         {
             var reservation = new Reservation
@@ -40,6 +40,7 @@ public class ReservationDal : IReservationDal
                 Key = "RSV" + Guid.NewGuid(),
             };
             var reservationEntry = _dbContext.Reservations.Add(reservation);
+            await _dbContext.SaveChangesAsync();
 
             foreach (var requestSeatNumber in request.SeatsNumbers)
             {
@@ -66,21 +67,36 @@ public class ReservationDal : IReservationDal
         var response = new AddReservationResponse
         {
             UserEmail = request.UserEmail,
-            Price = SeatPrice * request.SeatsNumbers.Count,
-            Tickets = addedTicketsData
+            Price = CalculatePrice(request.SeatsNumbers.Count),
+            Tickets = addedTicketsData,
+            BusKey = GetBusKey(request.BusNumber)
         };
         return new CoreResultModel<AddReservationResponse>(response, HttpStatusCode.Created);
     }
 
     public CoreResultModel<UsersFrequentTripsResponse> GetFrequentUsersTrips()
     {
-        var frequentTrips  = _dbContext.Tickets.GroupBy(r => new ReservationGroupingObject
+        var frequentTrips = _dbContext.Tickets.AsNoTracking().GroupBy(t => new ReservationGroupingObject
         {
-            BusId = r.BusNumber,
-            UserEmail = r.UserEmail
-        }).Select(x => new FrequentTripsData{UserEmail = x.Key.UserEmail,
-            TripRoute = x.Key.BusId == CairoAlexBusId ? TripRoutes.CairoAlex : TripRoutes.CairoAswan}).ToList();
+            BusId = t.BusNumber,
+            UserEmail = t.UserEmail
+        }).Select(x => new FrequentTripsData
+        {
+            UserEmail = x.Key.UserEmail,
+            TripRoute = x.Key.BusId == CairoAlexBusId ? TripRoutes.CairoAlex : TripRoutes.CairoAswan
+        }).ToList();
+        Console.WriteLine(frequentTrips[0]);
         return new CoreResultModel<UsersFrequentTripsResponse>(
             new UsersFrequentTripsResponse { FrequentUsersTrips = frequentTrips }, HttpStatusCode.OK, "");
+    }
+
+    private double CalculatePrice(int numberOfSeats)
+    {
+        return SeatPrice * numberOfSeats * (numberOfSeats >= 5 ? Discount80 : NoDiscount);
+    }
+
+    private string GetBusKey(int busNumber)
+    {
+        return busNumber == 1 ? "Bus-01" : "Bus-02";
     }
 }
