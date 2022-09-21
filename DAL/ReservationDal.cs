@@ -85,7 +85,6 @@ public class ReservationDal : IReservationDal
             UserEmail = x.Key.UserEmail,
             TripRoute = x.Key.BusId == CairoAlexBusId ? TripRoutes.CairoAlex : TripRoutes.CairoAswan
         }).ToList();
-        Console.WriteLine(frequentTrips[0]);
         return new CoreResultModel<UsersFrequentTripsResponse>(
             new UsersFrequentTripsResponse { FrequentUsersTrips = frequentTrips }, HttpStatusCode.OK, "");
     }
