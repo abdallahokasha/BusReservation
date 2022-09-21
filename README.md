@@ -19,4 +19,9 @@ curl --location --request POST 'https://localhost:7032/api/1.0/Reservations/Add'
   "busNumber": 1
 }'
 ```
+Get frequent trip request example
 
+```
+curl --location --request GET 'https://localhost:7032/api/1.0/Reservations/FrequentUsersTrips' \
+--header 'token: gjSkeBTp0dMTJVsR70ZJmg=='
+```

@@ -4,20 +4,20 @@ namespace BusReservation.Models.Helpers;
 
 public class CoreResultModel<T>
 {
-    public T ReturnObject { get; private set; }
+    public T Result { get; private set; }
 
     public HttpStatusCode Status { get; set; }
 
     public string ErrorMessage { get; private set; }
 
-    public CoreResultModel(T returnObject, HttpStatusCode status)
+    public CoreResultModel(T result, HttpStatusCode status)
     {
-        this.ReturnObject = returnObject;
+        this.Result = result;
         this.Status = status;
     }
 
-    public CoreResultModel(T returnObject, HttpStatusCode status, string errorMessage)
-        : this(returnObject, status)
+    public CoreResultModel(T result, HttpStatusCode status, string errorMessage)
+        : this(result, status)
     {
         this.ErrorMessage = errorMessage;
     }

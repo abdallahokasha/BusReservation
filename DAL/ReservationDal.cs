@@ -79,6 +79,6 @@ public class ReservationDal : IReservationDal
         }).Select(x => new FrequentTripsData{UserEmail = x.Key.UserEmail,
             TripRoute = x.Key.BusId == CairoAlexBusId ? TripRoutes.CairoAlex : TripRoutes.CairoAswan}).ToList();
         return new CoreResultModel<UsersFrequentTripsResponse>(
-            new UsersFrequentTripsResponse { FrequentUsersTrips = frequentTrips }, HttpStatusCode.OK);
+            new UsersFrequentTripsResponse { FrequentUsersTrips = frequentTrips }, HttpStatusCode.OK, "");
     }
 }
