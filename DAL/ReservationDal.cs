@@ -23,7 +23,7 @@ public class ReservationDal : IReservationDal
 
     public async Task<CoreResultModel<AddReservationResponse>> AddReservation(AddReservationRequest request)
     {
-        var reservedBusTickets = _dbContext.Tickets.AsNoTracking().Where(x => x.BusNumber == request.BusNumber).ToList()
+        var reservedBusTickets = _dbContext.Tickets.AsNoTracking().Where(x => x.BusNumber == request.BusNumber)
             .Select(x => x.SeatNumber).ToList();
         var requestReservedSeat = request.SeatsNumbers.Intersect(reservedBusTickets).ToList();
         if (requestReservedSeat.Count > 0)
@@ -65,7 +65,9 @@ public class ReservationDal : IReservationDal
 
         var response = new AddReservationResponse
         {
-            UserEmail = request.UserEmail, Price = SeatPrice * request.SeatsNumbers.Count, Tickets = addedTicketsData
+            UserEmail = request.UserEmail,
+            Price = SeatPrice * request.SeatsNumbers.Count,
+            Tickets = addedTicketsData
         };
         return new CoreResultModel<AddReservationResponse>(response, HttpStatusCode.Created);
     }

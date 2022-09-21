@@ -10,7 +10,7 @@ public class AddReservationRequest
 
     public virtual bool IsValid()
     {
-        if (string.IsNullOrEmpty(UserEmail) || BusNumber < 0 || SeatsNumbers.Count == 0)
+        if (string.IsNullOrEmpty(UserEmail) || BusNumber <= 0 || SeatsNumbers.Count == 0)
             return false;
         return true;
     }

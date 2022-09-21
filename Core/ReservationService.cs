@@ -20,8 +20,8 @@ public class ReservationService : IReservationService
         if (!request.IsValid())
             return new CoreResultModel<AddReservationResponse>(new AddReservationResponse(),
                 HttpStatusCode.BadRequest, "error: user email, bus or seats empty");
-        var response =  await _reservationDal.AddReservation(request);
-        return response;
+        
+        return  await _reservationDal.AddReservation(request);
     }
 
     public  CoreResultModel<UsersFrequentTripsResponse> GetFrequentUsersTrips()
