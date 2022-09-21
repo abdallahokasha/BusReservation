@@ -2,7 +2,6 @@ namespace BusReservation.Models.Responses;
 
 public class TicketResponse
 {
-    public string Key { get; set; }
-    public  string SeatKey { get; set; }
-    
+    public int SeatNumber { get; set; }
+    public string TicketKey { get; set; }
 }

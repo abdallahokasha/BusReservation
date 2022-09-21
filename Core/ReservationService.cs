@@ -17,7 +17,7 @@ public class ReservationService : IReservationService
     }
     public async Task<CoreResultModel<AddReservationResponse>> AddReservation(AddReservationRequest request)
     {
-        if (request.IsValid())
+        if (!request.IsValid())
             return new CoreResultModel<AddReservationResponse>(new AddReservationResponse(),
                 HttpStatusCode.BadRequest, "error: user email, bus or seats empty");
         var response =  await _reservationDal.AddReservation(request);

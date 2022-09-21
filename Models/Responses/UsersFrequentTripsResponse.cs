@@ -1,4 +1,4 @@
-using BusReservation.Models.Domain;
+using BusReservation.Models.Entities;
 
 namespace BusReservation.Models.Responses;
 

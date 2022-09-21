@@ -1,4 +1,4 @@
-namespace BusReservation.Models.Domain;
+namespace BusReservation.Models.Entities;
 
 public class BaseEntity
 {
@@ -10,5 +10,5 @@ public class BaseEntity
 
     public string UpdatedBy { get; set; }
 
-    public bool IsDeleted { get; set; }
+    public bool IsDeleted { get; set; } = false;
 }

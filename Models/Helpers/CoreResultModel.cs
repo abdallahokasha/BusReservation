@@ -16,9 +16,9 @@ public class CoreResultModel<T>
         this.Status = status;
     }
 
-    public CoreResultModel(T returnObject, HttpStatusCode status, string exceptionText)
+    public CoreResultModel(T returnObject, HttpStatusCode status, string errorMessage)
         : this(returnObject, status)
     {
-        this.ErrorMessage = exceptionText;
+        this.ErrorMessage = errorMessage;
     }
 }

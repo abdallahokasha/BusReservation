@@ -1,5 +1,6 @@
-using BusReservation.Models.Domain;
+using BusReservation.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace BusReservation.Data;
 
@@ -13,8 +14,4 @@ public class BusReservationDbContext : DbContext {
     public DbSet<Reservation> Reservations { get; set; }
     
     public DbSet<Ticket> Tickets { get; set; }
-    
-    public DbSet<Bus> Buses { get; set; }
-    
-    public DbSet<Seat> Seats { get; set; }
 }
