@@ -35,6 +35,7 @@ public class ReservationsController : Controller
         _logger.LogInformation(LogEventsTraces.GetFrequentUsersTrips, "Get Frequent Users Trips");
         if (!Request.Headers[RequestHeaders.Token].Equals(_authToken))
             return new StatusCodeResult(401);
+        
         return _reservationService.GetFrequentUsersTrips();
     }
 }

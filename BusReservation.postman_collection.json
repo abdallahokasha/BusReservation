@@ -8,9 +8,47 @@
 	"item": [
 		{
 			"name": "Add Reservation",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [
+					{
+						"key": "token",
+						"value": "gjSkeBTp0dMTJVsR70ZJmg==",
+						"type": "text"
+					},
+					{
+						"key": "Content-Length",
+						"value": "5000",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"userEmail\": \"abc2@xyz.com\",\n  \"seatsNumbers\": [3, 5],\n  \"busNumber\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7032/api/1.0/Reservations/Add",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7032",
+					"path": [
+						"api",
+						"1.0",
+						"Reservations",
+						"Add"
+					]
+				}
 			},
 			"response": []
 		},
