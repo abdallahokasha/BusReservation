@@ -14,6 +14,7 @@ public class ReservationDal : IReservationDal
     private readonly BusReservationDbContext _dbContext;
     private const double SeatPrice = 10.0;
     private const int CairoAlexBusId = 1;
+    private const int BusCapacity = 20;
     private const double Discount80 = 0.8;
     private const double NoDiscount = 1.0;
 
@@ -27,6 +28,10 @@ public class ReservationDal : IReservationDal
         var reservedBusTickets = _dbContext.Tickets.AsNoTracking().Where(x => x.BusNumber == request.BusNumber)
             .Select(x => x.SeatNumber).ToList();
         var requestReservedSeat = request.SeatsNumbers.Intersect(reservedBusTickets).ToList();
+        
+        if (reservedBusTickets.Count >= BusCapacity)
+            return new CoreResultModel<AddReservationResponse>(null!, HttpStatusCode.BadRequest,
+                "error: no capacity in the bus");
         if (requestReservedSeat.Count > 0)
             return new CoreResultModel<AddReservationResponse>(null!, HttpStatusCode.BadRequest,
                 $"error: seats {string.Join(", ", requestReservedSeat)} are already reserved!");
